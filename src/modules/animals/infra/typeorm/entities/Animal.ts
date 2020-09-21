@@ -12,7 +12,7 @@ class Animal {
   id: string;
 
   @Column()
-  nome: string;
+  nome_ou_brinco: string;
 
   @Column()
   peso: number;
@@ -27,13 +27,10 @@ class Animal {
   sexo: string;
 
   @Column()
-  doencas: string;
+  cidade: string;
 
   @Column()
-  remedios: string;
-
-  @Column()
-  origen_animal: string;
+  estado: string;
 
   @Column()
   anotacoes: string;
