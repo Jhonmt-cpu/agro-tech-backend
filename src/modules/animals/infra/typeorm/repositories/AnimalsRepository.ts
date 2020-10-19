@@ -47,6 +47,12 @@ class AnimalsRepository implements IAnimalsRepository {
 
     return animal;
   }
+
+  public async findAllAnimals(): Promise<Animal[]> {
+    const animals = await this.ormRepository.find();
+
+    return animals;
+  }
 }
 
 export default AnimalsRepository;

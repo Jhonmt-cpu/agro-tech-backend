@@ -4,15 +4,23 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
 } from 'typeorm';
 
+import Animal from '@modules/animals/infra/typeorm/entities/Animal';
+
 @Entity('doencas')
-class Animal {
+class Doenca {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column()
   animal_id: string;
+
+  @ManyToOne(() => Animal)
+  @JoinColumn({ name: 'animal_id' })
+  animal: Animal;
 
   @Column()
   nome_doenca: string;
@@ -36,4 +44,4 @@ class Animal {
   updated_at: Date;
 }
 
-export default Animal;
+export default Doenca;

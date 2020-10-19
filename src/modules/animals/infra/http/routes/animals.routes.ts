@@ -1,10 +1,15 @@
 import { Router } from 'express';
 
+import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAuthenticated';
+
 import AnimalsController from '../controllers/AnimalsController';
 
-const animalRouter = Router();
+const animalsRouter = Router();
 const animalsController = new AnimalsController();
 
-animalRouter.post('/', animalsController.create);
+animalsRouter.use(ensureAuthenticated);
 
-export default animalRouter;
+animalsRouter.post('/', animalsController.create);
+animalsRouter.get('/', animalsController.index);
+
+export default animalsRouter;

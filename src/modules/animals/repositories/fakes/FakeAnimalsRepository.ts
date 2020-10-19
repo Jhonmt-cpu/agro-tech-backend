@@ -46,6 +46,10 @@ class FakeAnimalsRepository implements IAnimalsRepository {
 
     return animal;
   }
+
+  public async findAllAnimals(): Promise<Animal[]> {
+    return this.animals;
+  }
 }
 
 export default FakeAnimalsRepository;

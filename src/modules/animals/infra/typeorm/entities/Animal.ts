@@ -4,7 +4,11 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
 } from 'typeorm';
+
+import User from '@modules/users/infra/typeorm/entities/User';
 
 @Entity('animals')
 class Animal {
@@ -13,6 +17,13 @@ class Animal {
 
   @Column()
   nome_ou_brinco: string;
+
+  @Column()
+  user_id: string;
+
+  @ManyToOne(() => User, user => user.id)
+  @JoinColumn({ name: 'user_id' })
+  user: User;
 
   @Column()
   peso: number;

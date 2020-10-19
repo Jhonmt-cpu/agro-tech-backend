@@ -3,6 +3,7 @@ import { parseISO } from 'date-fns';
 import { container } from 'tsyringe';
 
 import CreateAnimalService from '@modules/animals/services/CreateAnimalService';
+import ListAllAnimalsService from '@modules/animals/services/ListAllAnimalsService';
 
 export default class AnimalsController {
   public async create(request: Request, response: Response): Promise<Response> {
@@ -11,10 +12,10 @@ export default class AnimalsController {
       peso = null,
       nascimento = null,
       raca = null,
-      sexo,
-      cidade,
-      estado,
-      anotacoes,
+      sexo = 'Fêmea',
+      cidade = 'Patos de Minas',
+      estado = 'MG',
+      anotacoes = 'Teste',
     } = request.body;
 
     const createAnimal = container.resolve(CreateAnimalService);
@@ -37,5 +38,13 @@ export default class AnimalsController {
     });
 
     return response.json(animal);
+  }
+
+  public async index(request: Request, response: Response): Promise<Response> {
+    const listAllAnimals = container.resolve(ListAllAnimalsService);
+
+    const animals = await listAllAnimals.execute();
+
+    return response.json(animals).status(204);
   }
 }
