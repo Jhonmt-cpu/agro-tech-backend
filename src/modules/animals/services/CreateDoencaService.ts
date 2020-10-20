@@ -5,6 +5,7 @@ import AppError from '@shared/errors/AppError';
 
 import Doenca from '../infra/typeorm/entities/Doenca';
 import IDoencaRepository from '../repositories/IDoencasRepository';
+import iAnimalsRepository from '../repositories/IAnimalsRepository';
 
 interface IRequest {
   nome_doenca: string;
@@ -20,6 +21,9 @@ export default class CreateDoencaService {
   constructor(
     @inject('DoencasRepository')
     private doencasRepository: IDoencaRepository,
+
+    @inject('AnimalsRepository')
+    private animalsRepository: iAnimalsRepository,
   ) {}
 
   public async execute({
@@ -30,6 +34,12 @@ export default class CreateDoencaService {
     remedios,
     periodo_carencia,
   }: IRequest): Promise<Doenca> {
+    const animalExists = await this.animalsRepository.findById(animal_id);
+
+    if (!animalExists) {
+      throw new AppError('Animal does not exists');
+    }
+
     const doencaDate = startOfDay(data);
 
     const findDoencaInSameDateAndAnimal = await this.doencasRepository.findByNameDateAnimalId(
@@ -37,7 +47,7 @@ export default class CreateDoencaService {
     );
 
     if (findDoencaInSameDateAndAnimal) {
-      throw new AppError('Essa doença já foi cadastradada hoje nesse animal!');
+      throw new AppError('This desease is alredy registerd in this animal!');
     }
 
     const doenca = await this.doencasRepository.create({

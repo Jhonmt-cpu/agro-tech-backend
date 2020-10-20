@@ -2,11 +2,12 @@ import { injectable, inject } from 'tsyringe';
 
 import AppError from '@shared/errors/AppError';
 
-import Animal from '../infra/typeorm/entities/Animal';
 import IAnimalsRepository from '../repositories/IAnimalsRepository';
+import Animal from '../infra/typeorm/entities/Animal';
 
 interface IRequest {
   nome_ou_brinco: string;
+  user_id: string;
   peso?: number;
   nascimento?: Date;
   raca?: string;
@@ -25,6 +26,7 @@ class CreateAnimalService {
 
   public async execute({
     nome_ou_brinco,
+    user_id,
     peso,
     nascimento,
     raca,
@@ -38,11 +40,12 @@ class CreateAnimalService {
     );
 
     if (findAnimalWithSameName) {
-      throw new AppError('Animal com o memso nome já cadastrado');
+      throw new AppError('Animal with same name or earing alredy registered');
     }
 
     const animal = this.animalRepository.create({
       nome_ou_brinco,
+      user_id,
       peso,
       nascimento,
       raca,

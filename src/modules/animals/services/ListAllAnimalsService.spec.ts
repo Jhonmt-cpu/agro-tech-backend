@@ -13,6 +13,7 @@ describe('ListAllAnimals', () => {
   it('should be able to list all animals', async () => {
     const animal1 = await fakeAnimalsRepository.create({
       nome_ou_brinco: 'mimosa',
+      user_id: 'user_id',
       peso: 150,
       sexo: 'fêmea',
       nascimento: new Date(),
@@ -24,6 +25,7 @@ describe('ListAllAnimals', () => {
 
     const animal2 = await fakeAnimalsRepository.create({
       nome_ou_brinco: 'mimosa2',
+      user_id: 'user_id',
       peso: 145,
       sexo: 'fêmea',
       nascimento: new Date(),

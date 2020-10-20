@@ -9,6 +9,7 @@ describe('CreateAnimal', () => {
 
     const animal = await createAnimal.execute({
       nome_ou_brinco: 'mimosa',
+      user_id: 'user_id',
       peso: 150,
       sexo: 'fêmea',
       nascimento: new Date(),
@@ -19,6 +20,8 @@ describe('CreateAnimal', () => {
     });
 
     expect(animal).toHaveProperty('id');
+    expect(animal.nome_ou_brinco).toBe('mimosa');
+    expect(animal.user_id).toBe('user_id');
     expect(animal.peso).toBe(150);
     expect(animal.sexo).toBe('fêmea');
     expect(animal.cidade).toBe('Patos de Minas');
@@ -33,6 +36,7 @@ describe('CreateAnimal', () => {
 
     await createAnimal.execute({
       nome_ou_brinco: 'mimosa',
+      user_id: 'user_id',
       peso: 150,
       sexo: 'fêmea',
       nascimento: new Date(),
@@ -45,6 +49,7 @@ describe('CreateAnimal', () => {
     expect(
       createAnimal.execute({
         nome_ou_brinco: 'mimosa',
+        user_id: 'user_id',
         peso: 150,
         sexo: 'fêmea',
         nascimento: new Date(),

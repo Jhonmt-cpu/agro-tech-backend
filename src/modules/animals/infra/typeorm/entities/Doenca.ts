@@ -8,7 +8,7 @@ import {
   JoinColumn,
 } from 'typeorm';
 
-import Animal from '@modules/animals/infra/typeorm/entities/Animal';
+import Animal from './Animal';
 
 @Entity('doencas')
 class Doenca {

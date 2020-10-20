@@ -1,9 +1,9 @@
 import { v4 as uuid } from 'uuid';
 import { isEqual } from 'date-fns';
 
-import IDoencasRepository from '@modules/doencas/repositories/IDoencasRepository';
-import ICreateDoencaDTO from '@modules/doencas/dtos/ICreateDoencaDTO';
-import IFindDoencaDTO from '@modules/doencas/dtos/IFindDoencaDTO';
+import IDoencasRepository from '@modules/animals/repositories/IDoencasRepository';
+import ICreateDoencaDTO from '@modules/animals/dtos/ICreateDoencaDTO';
+import IFindDoencaDTO from '@modules/animals/dtos/IFindDoencaDTO';
 
 import Doenca from '../../infra/typeorm/entities/Doenca';
 
@@ -15,7 +15,7 @@ class FakeDoencasRepository implements IDoencasRepository {
     data,
     animal_id,
   }: IFindDoencaDTO): Promise<Doenca | undefined> {
-    const findDoenca = await this.doencas.find(
+    const findDoenca = this.doencas.find(
       doenca =>
         doenca.nome_doenca === nome_doenca &&
         doenca.animal_id === animal_id &&

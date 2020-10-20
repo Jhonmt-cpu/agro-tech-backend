@@ -1,8 +1,8 @@
 import { getRepository, Repository } from 'typeorm';
 
-import IDoencasRepository from '@modules/doencas/repositories/IDoencasRepository';
-import ICreateDoencaDTO from '@modules/doencas/dtos/ICreateDoencaDTO';
-import IFindDoencaDTO from '@modules/doencas/dtos/IFindDoencaDTO';
+import IDoencasRepository from '@modules/animals/repositories/IDoencasRepository';
+import ICreateDoencaDTO from '@modules/animals/dtos/ICreateDoencaDTO';
+import IFindDoencaDTO from '@modules/animals/dtos/IFindDoencaDTO';
 
 import Doenca from '../entities/Doenca';
 

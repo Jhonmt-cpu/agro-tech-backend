@@ -8,6 +8,12 @@ import Animal from '../../infra/typeorm/entities/Animal';
 class FakeAnimalsRepository implements IAnimalsRepository {
   private animals: Animal[] = [];
 
+  public async findById(animal_id: string): Promise<Animal | undefined> {
+    const animal = this.animals.find(a => a.id === animal_id);
+
+    return animal;
+  }
+
   public async findByNameOrEaring(
     nome_ou_brinco: string,
   ): Promise<Animal | undefined> {
@@ -20,6 +26,7 @@ class FakeAnimalsRepository implements IAnimalsRepository {
 
   public async create({
     nome_ou_brinco,
+    user_id,
     peso,
     nascimento,
     raca,
@@ -33,6 +40,7 @@ class FakeAnimalsRepository implements IAnimalsRepository {
     Object.assign(animal, {
       id: uuid(),
       nome_ou_brinco,
+      user_id,
       peso,
       nascimento,
       raca,

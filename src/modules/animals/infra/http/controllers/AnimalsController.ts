@@ -7,15 +7,17 @@ import ListAllAnimalsService from '@modules/animals/services/ListAllAnimalsServi
 
 export default class AnimalsController {
   public async create(request: Request, response: Response): Promise<Response> {
+    const user_id = request.user.id;
+
     const {
       nome_ou_brinco,
       peso = null,
       nascimento = null,
       raca = null,
-      sexo = 'Fêmea',
-      cidade = 'Patos de Minas',
-      estado = 'MG',
-      anotacoes = 'Teste',
+      sexo,
+      cidade,
+      estado,
+      anotacoes = '',
     } = request.body;
 
     const createAnimal = container.resolve(CreateAnimalService);
@@ -29,6 +31,7 @@ export default class AnimalsController {
     const animal = await createAnimal.execute({
       nome_ou_brinco,
       peso,
+      user_id,
       nascimento: parsedDate,
       raca,
       sexo,

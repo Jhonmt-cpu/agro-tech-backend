@@ -12,6 +12,12 @@ class AnimalsRepository implements IAnimalsRepository {
     this.ormRepository = getRepository(Animal);
   }
 
+  public async findById(animal_id: string): Promise<Animal | undefined> {
+    const animal = await this.ormRepository.findOne(animal_id);
+
+    return animal;
+  }
+
   public async findByNameOrEaring(
     nome_ou_brinco: string,
   ): Promise<Animal | undefined> {
@@ -24,6 +30,7 @@ class AnimalsRepository implements IAnimalsRepository {
 
   public async create({
     nome_ou_brinco,
+    user_id,
     peso,
     nascimento,
     raca,
@@ -34,6 +41,7 @@ class AnimalsRepository implements IAnimalsRepository {
   }: ICreateAnimalDTO): Promise<Animal> {
     const animal = this.ormRepository.create({
       nome_ou_brinco,
+      user_id,
       peso,
       nascimento,
       raca,

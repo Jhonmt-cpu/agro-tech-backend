@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { parseISO } from 'date-fns';
 import { container } from 'tsyringe';
 
-import CreateDoencaService from '@modules/doencas/services/CreateDoencaService';
+import CreateDoencaService from '@modules/animals/services/CreateDoencaService';
 
 export default class DoencasController {
   public async create(request: Request, response: Response): Promise<Response> {
