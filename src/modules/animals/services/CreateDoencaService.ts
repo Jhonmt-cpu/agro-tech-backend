@@ -8,6 +8,7 @@ import IDoencaRepository from '../repositories/IDoencasRepository';
 import iAnimalsRepository from '../repositories/IAnimalsRepository';
 
 interface IRequest {
+  user_id: string;
   nome_doenca: string;
   animal_id: string;
   data: Date;
@@ -27,6 +28,7 @@ export default class CreateDoencaService {
   ) {}
 
   public async execute({
+    user_id,
     nome_doenca,
     animal_id,
     data,
@@ -38,6 +40,10 @@ export default class CreateDoencaService {
 
     if (!animalExists) {
       throw new AppError('Animal does not exists');
+    }
+
+    if (animalExists.user_id !== user_id) {
+      throw new AppError('You can only register new deseases in your animals');
     }
 
     const doencaDate = startOfDay(data);

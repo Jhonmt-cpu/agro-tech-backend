@@ -9,6 +9,9 @@ import AnimalsRepository from '@modules/animals/infra/typeorm/repositories/Anima
 import IDoencasRepository from '@modules/animals/repositories/IDoencasRepository';
 import DoencasRepository from '@modules/animals/infra/typeorm/repositories/DoencasRepository';
 
+import IVacinesRepository from '@modules/animals/repositories/IVacinesRepository';
+import VacinesRepository from '@modules/animals/infra/typeorm/repositories/VacinesRepository';
+
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import UsersRepository from '@modules/users/infra/typeorm/repositories/UsersRepository';
 
@@ -23,6 +26,11 @@ container.registerSingleton<IAnimalsRepository>(
 container.registerSingleton<IDoencasRepository>(
   'DoencasRepository',
   DoencasRepository,
+);
+
+container.registerSingleton<IVacinesRepository>(
+  'VacinesRepository',
+  VacinesRepository,
 );
 
 container.registerSingleton<IUsersRepository>(

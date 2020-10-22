@@ -6,6 +6,8 @@ import CreateDoencaService from '@modules/animals/services/CreateDoencaService';
 
 export default class DoencasController {
   public async create(request: Request, response: Response): Promise<Response> {
+    const user_id = request.user.id;
+
     const {
       nome_doenca,
       animal_id,
@@ -20,6 +22,7 @@ export default class DoencasController {
     const parsedDate = parseISO(data);
 
     const doenca = await createDoenca.execute({
+      user_id,
       nome_doenca,
       animal_id,
       data: parsedDate,

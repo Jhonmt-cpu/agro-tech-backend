@@ -5,4 +5,5 @@ import IFindDoencaDTO from '../dtos/IFindDoencaDTO';
 export default interface IDoencasRepository {
   create(data: ICreateDoencaDTO): Promise<Doenca>;
   findByNameDateAnimalId(data: IFindDoencaDTO): Promise<Doenca | undefined>;
+  findByAnimalId(animal_id: string): Promise<Doenca[]>;
 }

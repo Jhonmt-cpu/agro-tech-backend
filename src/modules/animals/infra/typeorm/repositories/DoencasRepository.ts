@@ -50,6 +50,19 @@ class DoencasRepository implements IDoencasRepository {
 
     return doenca;
   }
+
+  public async findByAnimalId(animal_id: string): Promise<Doenca[]> {
+    const doencas = await this.ormRepository.find({
+      where: {
+        animal_id,
+      },
+      order: {
+        created_at: 'DESC',
+      },
+    });
+
+    return doencas;
+  }
 }
 
 export default DoencasRepository;
