@@ -11,5 +11,6 @@ animalsRouter.use(ensureAuthenticated);
 
 animalsRouter.post('/', animalsController.create);
 animalsRouter.get('/', animalsController.index);
+animalsRouter.get('/:animal_id', animalsController.show);
 
 export default animalsRouter;

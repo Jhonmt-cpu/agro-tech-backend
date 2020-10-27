@@ -14,7 +14,10 @@ vacinesRouter.use(ensureAuthenticated);
 
 vacinesRouter.post('/', vacinesController.create);
 
-vacinesRouter.get('/month-availability', userMonthVacinesControler.index);
+vacinesRouter.get(
+  '/month-availability/:user_id',
+  userMonthVacinesControler.index,
+);
 vacinesRouter.get('/day-vacines', userDayVacinesControler.index);
 
 export default vacinesRouter;

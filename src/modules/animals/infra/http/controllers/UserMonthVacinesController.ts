@@ -5,8 +5,7 @@ import ListVacinesInMonthService from '@modules/animals/services/ListVacinesInMo
 
 export default class UserMonthVacinesController {
   public async index(request: Request, response: Response): Promise<Response> {
-    const user_id = request.user.id;
-    const { month, year } = request.query;
+    const { user_id } = request.params;
 
     const listVacinesInMonthService = container.resolve(
       ListVacinesInMonthService,
@@ -14,8 +13,6 @@ export default class UserMonthVacinesController {
 
     const availability = await listVacinesInMonthService.execute({
       user_id,
-      month: Number(month),
-      year: Number(year),
     });
 
     return response.json(availability);

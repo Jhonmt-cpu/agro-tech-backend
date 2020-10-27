@@ -36,6 +36,7 @@ class CreateAnimalService {
     anotacoes,
   }: IRequest): Promise<Animal> {
     const findAnimalWithSameName = await this.animalRepository.findByNameOrEaring(
+      user_id,
       nome_ou_brinco,
     );
 

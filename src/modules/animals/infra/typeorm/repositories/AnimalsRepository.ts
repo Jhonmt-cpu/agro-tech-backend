@@ -5,6 +5,15 @@ import ICreateAnimalDTO from '@modules/animals/dtos/ICreateAnimalDTO';
 
 import Animal from '../entities/Animal';
 
+interface ISearchAnimalsArrayItem {
+  [key: string]: string | number | undefined;
+}
+
+interface ISearchAnimals {
+  user_id: string;
+  conditions: ISearchAnimalsArrayItem[];
+}
+
 class AnimalsRepository implements IAnimalsRepository {
   private ormRepository: Repository<Animal>;
 
@@ -19,10 +28,11 @@ class AnimalsRepository implements IAnimalsRepository {
   }
 
   public async findByNameOrEaring(
+    user_id: string,
     nome_ou_brinco: string,
   ): Promise<Animal | undefined> {
     const findAnimal = await this.ormRepository.findOne({
-      where: { nome_ou_brinco },
+      where: { nome_ou_brinco, user_id },
     });
 
     return findAnimal;
@@ -56,10 +66,57 @@ class AnimalsRepository implements IAnimalsRepository {
     return animal;
   }
 
-  public async findAllAnimals(): Promise<Animal[]> {
-    const animals = await this.ormRepository.find();
+  public async findAllAnimals(user_id: string): Promise<Animal[]> {
+    const animals = await this.ormRepository.find({
+      where: {
+        user_id,
+      },
+      order: {
+        created_at: 'DESC',
+      },
+    });
 
     return animals;
+  }
+
+  public async searchAnimals({
+    user_id,
+    conditions,
+  }: ISearchAnimals): Promise<Animal[]> {
+    let animals = [];
+    if (conditions.length === 0) {
+      animals = await this.ormRepository.find({
+        where: {
+          user_id,
+        },
+      });
+    } else {
+      const conditionsParsed = conditions.map((condition, arrayIndex) => {
+        const index = Object.keys(condition)[0];
+        if (arrayIndex === 0) {
+          return `${index}='${condition[index]}' `;
+        }
+        return `AND ${index}='${condition[index]}' `;
+      });
+
+      let query = '';
+
+      conditionsParsed.forEach(conditionParsed => {
+        query = `${query} ${conditionParsed}`;
+      });
+
+      animals = await this.ormRepository.query(
+        `SELECT * FROM animals WHERE user_id='${user_id}' AND ${query};`,
+      );
+    }
+
+    return animals;
+  }
+
+  public async save(animal: Animal): Promise<Animal> {
+    const animalUpdated = await this.ormRepository.save(animal);
+
+    return animalUpdated;
   }
 }
 

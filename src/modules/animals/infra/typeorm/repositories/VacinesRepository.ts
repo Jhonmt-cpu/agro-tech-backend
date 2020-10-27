@@ -1,4 +1,4 @@
-import { getRepository, Repository, Raw, LessThanOrEqual } from 'typeorm';
+import { getRepository, Repository, Raw, Between } from 'typeorm';
 
 import IVacinesRepository from '@modules/animals/repositories/IVacinesRepository';
 import ICreateVacineDTO from '@modules/animals/dtos/ICreateVacineDTO';
@@ -34,18 +34,10 @@ class DoencasRepository implements IVacinesRepository {
 
   public async findAllVacinesInMonthFromUser({
     user_id,
-    month,
-    year,
   }: IFindAllVacinesInMonthFromUser): Promise<Vacine[]> {
-    const parsedMonth = String(month).padStart(2, '0');
-
     const vacines = await this.ormRepository.find({
       where: {
         user_id,
-        date: Raw(
-          dateFieldName =>
-            `to_char(${dateFieldName}, 'MM-YYYY') = '${parsedMonth}-${year}'`,
-        ),
       },
     });
 
@@ -69,7 +61,6 @@ class DoencasRepository implements IVacinesRepository {
             `to_char(${dateFieldName}, 'DD-MM-YYYY') = '${parsedDay}-${parsedMonth}-${year}'`,
         ),
       },
-      relations: ['user'],
     });
 
     return vacines;
@@ -77,7 +68,8 @@ class DoencasRepository implements IVacinesRepository {
 
   public async findVacinesBeforeToday({
     user_id,
-    date,
+    today_date,
+    birth_animal_date,
   }: IFindVacinesBeforeTodayDTO): Promise<Vacine[]> {
     // const parsedDay = String(day).padStart(2, '0');
     // const parsedMonth = String(month).padStart(2, '0');
@@ -85,7 +77,7 @@ class DoencasRepository implements IVacinesRepository {
     const vacines = await this.ormRepository.find({
       where: {
         user_id,
-        date: LessThanOrEqual(date),
+        date: Between(birth_animal_date, today_date),
       },
     });
 

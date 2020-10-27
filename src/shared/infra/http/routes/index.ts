@@ -1,6 +1,7 @@
 import { Router } from 'express';
 
 import animalRouter from '@modules/animals/infra/http/routes/animals.routes';
+import searchAnimalsRouter from '@modules/animals/infra/http/routes/searchAnimals.routes';
 import doencaRouter from '@modules/animals/infra/http/routes/doencas.routes';
 import vacinesRouter from '@modules/animals/infra/http/routes/vacines.routes';
 import veterinaryTableRouter from '@modules/animals/infra/http/routes/veterinaryTable.routes';
@@ -12,6 +13,7 @@ import passwordRouter from '@modules/users/infra/http/routes/password.routes';
 const routes = Router();
 
 routes.use('/animals', animalRouter);
+routes.use('/search-animals', searchAnimalsRouter);
 routes.use('/doencas', doencaRouter);
 routes.use('/vacines', vacinesRouter);
 routes.use('/veterinary-table', veterinaryTableRouter);

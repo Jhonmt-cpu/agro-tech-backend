@@ -21,6 +21,9 @@ class Animal {
   @Column()
   user_id: string;
 
+  @Column('time with time zone')
+  carencia: Date;
+
   @ManyToOne(() => User, user => user.id)
   @JoinColumn({ name: 'user_id' })
   user: User;

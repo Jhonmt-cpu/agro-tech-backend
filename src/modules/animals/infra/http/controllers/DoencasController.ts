@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { parseISO } from 'date-fns';
+import { startOfToday } from 'date-fns';
 import { container } from 'tsyringe';
 
 import CreateDoencaService from '@modules/animals/services/CreateDoencaService';
@@ -11,7 +11,6 @@ export default class DoencasController {
     const {
       nome_doenca,
       animal_id,
-      data,
       descricao = null,
       remedios,
       periodo_carencia,
@@ -19,13 +18,11 @@ export default class DoencasController {
 
     const createDoenca = container.resolve(CreateDoencaService);
 
-    const parsedDate = parseISO(data);
-
     const doenca = await createDoenca.execute({
       user_id,
       nome_doenca,
       animal_id,
-      data: parsedDate,
+      data: startOfToday(),
       descricao,
       remedios,
       periodo_carencia,

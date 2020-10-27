@@ -25,7 +25,7 @@ class Doenca {
   @Column()
   nome_doenca: string;
 
-  @Column('date')
+  @Column('timestamp')
   data: Date;
 
   @Column()
@@ -34,7 +34,7 @@ class Doenca {
   @Column()
   remedios: string;
 
-  @Column()
+  @Column('int')
   periodo_carencia: number;
 
   @CreateDateColumn()

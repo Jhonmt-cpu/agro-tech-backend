@@ -1,4 +1,4 @@
-import { startOfDay } from 'date-fns';
+import { addDays } from 'date-fns';
 import { injectable, inject } from 'tsyringe';
 
 import AppError from '@shared/errors/AppError';
@@ -46,20 +46,24 @@ export default class CreateDoencaService {
       throw new AppError('You can only register new deseases in your animals');
     }
 
-    const doencaDate = startOfDay(data);
-
     const findDoencaInSameDateAndAnimal = await this.doencasRepository.findByNameDateAnimalId(
-      { nome_doenca, animal_id, data: doencaDate },
+      { nome_doenca, animal_id, data },
     );
 
     if (findDoencaInSameDateAndAnimal) {
       throw new AppError('This desease is alredy registerd in this animal!');
     }
 
+    const carenciaDate = addDays(data, Number(periodo_carencia));
+
+    animalExists.carencia = carenciaDate;
+
+    await this.animalsRepository.save(animalExists);
+
     const doenca = await this.doencasRepository.create({
       nome_doenca,
       animal_id,
-      data: doencaDate,
+      data,
       remedios,
       periodo_carencia,
       descricao,

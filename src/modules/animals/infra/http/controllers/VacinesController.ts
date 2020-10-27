@@ -11,8 +11,8 @@ export default class VacinesController {
     const {
       name,
       first_date,
-      number_of_doses,
-      period_days_bettwen_doses,
+      number_of_doses = 1,
+      period_days_bettwen_doses = 0,
       anotacoes,
     } = request.body;
 

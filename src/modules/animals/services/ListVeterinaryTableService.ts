@@ -1,17 +1,20 @@
 import { injectable, inject } from 'tsyringe';
 
+import { startOfToday } from 'date-fns';
 import IVacinesRepository from '../repositories/IVacinesRepository';
 import IDoencasRepository from '../repositories/IDoencasRepository';
 
 interface IRequest {
   user_id: string;
   animal_id: string;
+  birth_animal_date: Date;
 }
 
 type IResponse = Array<{
+  id: string;
   name: string;
   type: string;
-  date: Date;
+  date: string;
 }>;
 
 @injectable()
@@ -24,13 +27,18 @@ class ListVacinesInMonthService {
     private doencasRepository: IDoencasRepository,
   ) {}
 
-  public async execute({ user_id, animal_id }: IRequest): Promise<IResponse> {
-    const today = new Date();
+  public async execute({
+    user_id,
+    animal_id,
+    birth_animal_date,
+  }: IRequest): Promise<IResponse> {
+    const today = startOfToday();
 
     const vacinesBeforeAndToday = await this.vacinesRepository.findVacinesBeforeToday(
       {
         user_id,
-        date: today,
+        today_date: today,
+        birth_animal_date,
       },
     );
 
@@ -39,18 +47,32 @@ class ListVacinesInMonthService {
     );
 
     const vacinesFormated = vacinesBeforeAndToday.map(vacine => {
+      const day = vacine.date.getDate();
+      const month = vacine.date.getMonth() + 1;
+      const year = vacine.date.getFullYear();
+
+      const parsedDay = String(day).padStart(2, '0');
+      const parsedMonth = String(month).padStart(2, '0');
       return {
+        id: vacine.id,
         name: vacine.name,
         type: 'Vacina',
-        date: vacine.date,
+        date: `${year}-${parsedMonth}-${parsedDay}`,
       };
     });
 
     const doencasFormated = doencasBeforeAndToday.map(doenca => {
+      const day = doenca.data.getDate();
+      const month = doenca.data.getMonth() + 1;
+      const year = doenca.data.getFullYear();
+
+      const parsedDay = String(day).padStart(2, '0');
+      const parsedMonth = String(month).padStart(2, '0');
       return {
+        id: doenca.id,
         name: doenca.nome_doenca,
         type: 'Doença',
-        date: doenca.created_at,
+        date: `${year}-${parsedMonth}-${parsedDay}`,
       };
     });
 

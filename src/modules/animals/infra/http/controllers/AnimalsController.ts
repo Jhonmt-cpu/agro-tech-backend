@@ -4,6 +4,7 @@ import { container } from 'tsyringe';
 
 import CreateAnimalService from '@modules/animals/services/CreateAnimalService';
 import ListAllAnimalsService from '@modules/animals/services/ListAllAnimalsService';
+import ShowAnimalService from '@modules/animals/services/ShowAnimalService';
 
 export default class AnimalsController {
   public async create(request: Request, response: Response): Promise<Response> {
@@ -44,10 +45,24 @@ export default class AnimalsController {
   }
 
   public async index(request: Request, response: Response): Promise<Response> {
+    const user_id = request.user.id;
+
     const listAllAnimals = container.resolve(ListAllAnimalsService);
 
-    const animals = await listAllAnimals.execute();
+    const animals = await listAllAnimals.execute({ user_id });
 
     return response.json(animals).status(204);
+  }
+
+  public async show(request: Request, response: Response): Promise<Response> {
+    const user_id = request.user.id;
+
+    const { animal_id } = request.params;
+
+    const showAnimal = container.resolve(ShowAnimalService);
+
+    const animal = await showAnimal.execute({ user_id, animal_id });
+
+    return response.json(animal).status(204);
   }
 }

@@ -16,7 +16,7 @@ interface IRequest {
 }
 
 @injectable()
-export default class CreateDoencaService {
+export default class CreateVacineService {
   constructor(
     @inject('VacinesRepository')
     private vacinesRepository: IVacinesRepository,

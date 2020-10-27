@@ -1,5 +1,5 @@
 interface IMailConfig {
-  driver: 'ethereal';
+  driver: 'ethereal' | 'gmail';
 
   defaults: {
     from: {
