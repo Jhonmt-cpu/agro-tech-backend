@@ -6,9 +6,11 @@ import {
   UpdateDateColumn,
   ManyToOne,
   JoinColumn,
+  OneToMany,
 } from 'typeorm';
 
 import User from '@modules/users/infra/typeorm/entities/User';
+import VacineToAnimal from './VacineToAnimal';
 
 @Entity('vacines')
 class Vacine {
@@ -24,6 +26,11 @@ class Vacine {
   @ManyToOne(() => User, user => user.id)
   @JoinColumn({ name: 'user_id' })
   user: User;
+
+  @OneToMany(() => VacineToAnimal, vacineToAnimal => vacineToAnimal.vacine, {
+    cascade: true,
+  })
+  vacine_to_animals: VacineToAnimal[];
 
   @Column('int')
   dose_number: number;

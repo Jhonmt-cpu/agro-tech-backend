@@ -56,9 +56,10 @@ export default class CreateDoencaService {
 
     const carenciaDate = addDays(data, Number(periodo_carencia));
 
-    animalExists.carencia = carenciaDate;
-
-    await this.animalsRepository.save(animalExists);
+    if (animalExists.carencia < carenciaDate) {
+      animalExists.carencia = carenciaDate;
+      await this.animalsRepository.save(animalExists);
+    }
 
     const doenca = await this.doencasRepository.create({
       nome_doenca,

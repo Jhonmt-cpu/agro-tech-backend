@@ -12,6 +12,9 @@ import DoencasRepository from '@modules/animals/infra/typeorm/repositories/Doenc
 import IVacinesRepository from '@modules/animals/repositories/IVacinesRepository';
 import VacinesRepository from '@modules/animals/infra/typeorm/repositories/VacinesRepository';
 
+import IVacinesToAnimalsRepository from '@modules/animals/repositories/IVacinesToAnimalsRepository';
+import VacinesToAnimalsRepository from '@modules/animals/infra/typeorm/repositories/VacinesToAnimalsRepository';
+
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import UsersRepository from '@modules/users/infra/typeorm/repositories/UsersRepository';
 
@@ -31,6 +34,11 @@ container.registerSingleton<IDoencasRepository>(
 container.registerSingleton<IVacinesRepository>(
   'VacinesRepository',
   VacinesRepository,
+);
+
+container.registerSingleton<IVacinesToAnimalsRepository>(
+  'VacinesToAnimalsRepository',
+  VacinesToAnimalsRepository,
 );
 
 container.registerSingleton<IUsersRepository>(

@@ -118,6 +118,10 @@ class AnimalsRepository implements IAnimalsRepository {
 
     return animalUpdated;
   }
+
+  public async delete(animal_id: string): Promise<void> {
+    await this.ormRepository.delete(animal_id);
+  }
 }
 
 export default AnimalsRepository;

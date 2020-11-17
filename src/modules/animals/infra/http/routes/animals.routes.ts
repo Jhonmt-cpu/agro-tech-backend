@@ -12,5 +12,7 @@ animalsRouter.use(ensureAuthenticated);
 animalsRouter.post('/', animalsController.create);
 animalsRouter.get('/', animalsController.index);
 animalsRouter.get('/:animal_id', animalsController.show);
+animalsRouter.patch('/:animal_id', animalsController.update);
+animalsRouter.delete('/:animal_id', animalsController.delete);
 
 export default animalsRouter;

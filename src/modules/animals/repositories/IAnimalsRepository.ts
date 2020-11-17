@@ -12,4 +12,5 @@ export default interface IAnimalsRepository {
   findAllAnimals(user_id: string): Promise<Animal[]>;
   findById(animal_id: string): Promise<Animal | undefined>;
   searchAnimals(data: ISearchAnimalsDTO): Promise<Animal[]>;
+  delete(animal_id: string): Promise<void>;
 }

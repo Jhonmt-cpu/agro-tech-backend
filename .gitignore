@@ -4,6 +4,7 @@ coverage/
 .env
 .idea/
 build/
+dist/
 temp/
 tmp/*
 !tmp/.gitkeep

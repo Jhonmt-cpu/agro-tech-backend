@@ -48,6 +48,8 @@ class DoencasRepository implements IDoencasRepository {
 
     this.ormRepository.save(doenca);
 
+    console.log(doenca);
+
     return doenca;
   }
 
@@ -62,6 +64,18 @@ class DoencasRepository implements IDoencasRepository {
     });
 
     return doencas;
+  }
+
+  public async findById(doenca_id: string): Promise<Doenca | undefined> {
+    const doenca = await this.ormRepository.findOne(doenca_id);
+
+    return doenca;
+  }
+
+  public async save(doenca: Doenca): Promise<Doenca> {
+    const newDoenca = this.ormRepository.save(doenca);
+
+    return newDoenca;
   }
 }
 

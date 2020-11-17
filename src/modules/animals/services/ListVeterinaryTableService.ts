@@ -3,6 +3,7 @@ import { injectable, inject } from 'tsyringe';
 import { startOfToday } from 'date-fns';
 import IVacinesRepository from '../repositories/IVacinesRepository';
 import IDoencasRepository from '../repositories/IDoencasRepository';
+import IVacinesToAnimalsRepository from '../repositories/IVacinesToAnimalsRepository';
 
 interface IRequest {
   user_id: string;
@@ -25,6 +26,9 @@ class ListVacinesInMonthService {
 
     @inject('DoencasRepository')
     private doencasRepository: IDoencasRepository,
+
+    @inject('VacinesToAnimalsRepository')
+    private vacinesToAnimalsRepository: IVacinesToAnimalsRepository,
   ) {}
 
   public async execute({
@@ -32,6 +36,10 @@ class ListVacinesInMonthService {
     animal_id,
     birth_animal_date,
   }: IRequest): Promise<IResponse> {
+    const vacines_ids = await this.vacinesToAnimalsRepository.findAnimalVacines(
+      animal_id,
+    );
+
     const today = startOfToday();
 
     const vacinesBeforeAndToday = await this.vacinesRepository.findVacinesBeforeToday(
@@ -39,6 +47,7 @@ class ListVacinesInMonthService {
         user_id,
         today_date: today,
         birth_animal_date,
+        vacines_ids,
       },
     );
 

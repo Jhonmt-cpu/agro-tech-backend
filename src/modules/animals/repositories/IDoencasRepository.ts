@@ -6,4 +6,6 @@ export default interface IDoencasRepository {
   create(data: ICreateDoencaDTO): Promise<Doenca>;
   findByNameDateAnimalId(data: IFindDoencaDTO): Promise<Doenca | undefined>;
   findByAnimalId(animal_id: string): Promise<Doenca[]>;
+  findById(doenca_id: string): Promise<Doenca | undefined>;
+  save(doenca: Doenca): Promise<Doenca>;
 }

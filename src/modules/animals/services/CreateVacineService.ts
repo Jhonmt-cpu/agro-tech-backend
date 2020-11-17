@@ -4,6 +4,7 @@ import { injectable, inject } from 'tsyringe';
 // import AppError from '@shared/errors/AppError';
 
 import Vacine from '../infra/typeorm/entities/Vacine';
+import Animal from '../infra/typeorm/entities/Animal';
 import IVacinesRepository from '../repositories/IVacinesRepository';
 
 interface IRequest {
@@ -13,6 +14,7 @@ interface IRequest {
   number_of_doses: number;
   period_days_bettwen_doses: number;
   anotacoes: string;
+  animalsIds: Animal[];
 }
 
 @injectable()
@@ -29,6 +31,7 @@ export default class CreateVacineService {
     number_of_doses,
     period_days_bettwen_doses,
     anotacoes,
+    animalsIds,
   }: IRequest): Promise<Vacine[]> {
     const vacineDate = startOfDay(first_date);
 
@@ -46,7 +49,10 @@ export default class CreateVacineService {
       };
     });
 
-    const vacines = await this.vacinesRepository.create(AllVacines);
+    const vacines = await this.vacinesRepository.create({
+      vacinesData: AllVacines,
+      animals: animalsIds,
+    });
 
     return vacines;
   }
