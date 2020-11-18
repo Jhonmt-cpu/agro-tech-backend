@@ -1,5 +1,5 @@
 interface IMailConfig {
-  driver: 'ethereal' | 'gmail';
+  driver: 'ethereal' | 'ses';
 
   defaults: {
     from: {
@@ -14,7 +14,7 @@ export default {
 
   defaults: {
     from: {
-      email: 'agrotech@agrotech.com',
+      email: 'joaomateusabm@devjhon.com',
       name: 'Agrotech',
     },
   },
