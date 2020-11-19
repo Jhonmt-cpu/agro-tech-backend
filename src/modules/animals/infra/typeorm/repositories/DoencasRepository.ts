@@ -48,8 +48,6 @@ class DoencasRepository implements IDoencasRepository {
 
     this.ormRepository.save(doenca);
 
-    console.log(doenca);
-
     return doenca;
   }
 
